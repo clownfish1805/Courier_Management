@@ -7,42 +7,54 @@ namespace Courier_Management.CodingQues
     {
         public void ques5()
         {
+            string customerName = "Alice";
             string[] orders = { "TRK123", "TRK124", "TRK125" };
 
+            Console.Write("Enter customer name: ");
+            string inputName = Console.ReadLine();
 
-            Console.WriteLine($"Orders for customer: " + Console.ReadLine());
-            for (int i = 0; i < orders.Length; i++)
+            
+            if (inputName == customerName)
             {
-                Console.WriteLine($"Order {i + 1}: {orders[i]}");
-            }
-        }
-        public void ques6()
-        {
-            string[] customers = { "Alice", "Bob", "Alice", "Charlie", "Bob", "Alice" };
-            string[] orders = { "Order #101", "Order #102", "Order #103", "Order #104", "Order #105", "Order #106" };
-
-            Console.Write("Enter customer name to view their orders: ");
-            string customerName = Console.ReadLine();
-
-            Console.WriteLine($"\nOrders for {customerName}:");
-
-            bool found = false;
-
-            for (int i = 0; i < customers.Length; i++)
-            {
-                if (customers[i].Equals(customerName, StringComparison.OrdinalIgnoreCase))
+                Console.WriteLine($"Orders for {customerName}:");
+                for (int i = 0; i < orders.Length; i++)
                 {
-                    Console.WriteLine(orders[i]);
-                    found = true;
+                    Console.WriteLine("Order " + (i + 1) + ": " + orders[i]);
                 }
             }
+            else
+            {
+                Console.WriteLine("No orders found for the given customer.");
+            }
+        }
 
-            if (!found)
+       public void ques6()
+        {
+            Dictionary<string, List<string>> customerOrders = new Dictionary<string, List<string>>()
+{
+    { "Alice", new List<string> { "Order #101", "Order #103" } },
+    { "Bob", new List<string> { "Order #102" } },
+    { "Charlie", new List<string> { "Order #104", "Order #105" } }
+};
+
+            Console.Write("Enter customer name: ");
+            string input = Console.ReadLine();
+
+            if (customerOrders.ContainsKey(input))
+            {
+                Console.WriteLine($"Orders for {input}:");
+                foreach (var order in customerOrders[input])
+                {
+                    Console.WriteLine(order);
+                }
+            }
+            else
             {
                 Console.WriteLine("No orders found for this customer.");
             }
+
         }
 
-       
+
     }
     }
