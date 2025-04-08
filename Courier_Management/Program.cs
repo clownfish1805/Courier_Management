@@ -22,7 +22,7 @@ namespace Courier_Management
             Task4 task4 = new Task4();
            Task5 task5 = new Task5();
 
-      
+
 
             //Console.WriteLine("\n--- Task1: Question 1 ---");
             //task1.ques1();
@@ -65,10 +65,10 @@ namespace Courier_Management
             //task5.PrintAllPayments();
 
 
-            //MainModule menu = new MainModule();
-            //menu.Start();
+            MainModule menu = new MainModule();
+            menu.Start();
 
-      
+
 
         }
     }

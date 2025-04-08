@@ -1,22 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Courier_Management.Models;
+﻿using Courier_Management.Models;
 using Courier_Management.Util;
-using Courier_Management.Exceptions;
 using Microsoft.Data.SqlClient;
+using System;
 
 namespace Courier_Management.Dao
 {
-    class CourierAdminService:ICourierAdminService
+    class CourierAdminService : ICourierAdminService
     {
         private Connection _db;
 
-    
-        public CourierAdminService() 
+        public CourierAdminService()
         {
             _db = new Connection();
         }
@@ -27,9 +20,10 @@ namespace Courier_Management.Dao
             using (SqlCommand cmd = new SqlCommand())
             {
                 cmd.CommandText = @"
-                    INSERT INTO Employee (EmployeeID , Name, Email, ContactNumber, Role, Salary)
+                    INSERT INTO Employee (EmployeeID, Name, Email, ContactNumber, Role, Salary)
                     OUTPUT INSERTED.EmployeeID
-                    VALUES (@EmployeeID , @Name, @Email, @ContactNumber, @Role, @Salary)";
+                    VALUES (@EmployeeID, @Name, @Email, @ContactNumber, @Role, @Salary)";
+
                 cmd.Parameters.AddWithValue("@EmployeeID", obj.EmployeeID);
                 cmd.Parameters.AddWithValue("@Name", obj.Name);
                 cmd.Parameters.AddWithValue("@Email", obj.Email);
@@ -56,7 +50,5 @@ namespace Courier_Management.Dao
                 }
             }
         }
-
-        
     }
 }

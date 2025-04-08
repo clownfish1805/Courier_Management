@@ -9,13 +9,11 @@ namespace Courier_Management.Dao
 {
     interface ICourierUserService
     {
-        public bool placeOrder(Courier newCourier);
-        public string getOrderStatus(string trackingNumber);
-        public bool cancelOrder(string trackingNumber);
-
-        public List<Courier> getAssignedOrder(int employeeID);
+        bool placeOrder(Courier newCourier);
+        string getOrderStatus(string trackingNumber);
+        bool cancelOrder(string trackingNumber);
+        List<Courier> getAssignedOrder(int employeeID);
         List<Courier> GetallCouriers();
 
-       
     }
 }

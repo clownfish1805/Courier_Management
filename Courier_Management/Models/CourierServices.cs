@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Courier_Management.Models
 {
-    class CourierServices
+    public class CourierServices
     {
         [Key]
         public int ServiceID { get; set; }

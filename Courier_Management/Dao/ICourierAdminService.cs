@@ -7,7 +7,7 @@ using Courier_Management.Models;
 
 namespace Courier_Management.Dao
 {
-    interface ICourierAdminService
+    public interface ICourierAdminService
     {
         int addCourierStaff(Employee obj);
 

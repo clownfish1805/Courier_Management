@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Courier_Management.Models
 {
-    class Location
+    public class Location
     {
         [Key]
         public int LocationID { get; set; }

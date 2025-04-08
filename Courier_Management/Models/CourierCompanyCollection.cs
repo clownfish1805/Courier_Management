@@ -1,27 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Courier_Management.Models
 {
-    class CourierCompanyCollection
+    public class CourierCompanyCollection
     {
-        public List<Courier> CourierList { get; set; }
+        public List<Courier> courierList;
 
         public CourierCompanyCollection()
         {
-            CourierList = new List<Courier>();
+            courierList = new List<Courier>();
         }
-        public void AddCourier(Courier courier)
-        {
-            CourierList.Add(courier);
-        }
-        public bool RemoveCourier(Courier courier)
-        {
-            return CourierList.Remove(courier);
-        }
-
     }
 }

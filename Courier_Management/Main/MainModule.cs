@@ -25,7 +25,7 @@ namespace Courier_Management.Main
                 Console.WriteLine("==== Courier Management Application ====");
                 Console.WriteLine("1. Courier Management System");
                 Console.WriteLine("2. Admin Management System");
-                Console.WriteLine("3. Crud");
+                Console.WriteLine("3. Collection");
                 Console.WriteLine("4. Exit");
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
@@ -39,7 +39,8 @@ namespace Courier_Management.Main
                         program.AdminManagement();
                         break;
                     case "3":
-                        program.crud();
+                        program.CollectionManagement();
+                       
                         break;
                     case "4":
                         Console.WriteLine("Exiting the application. Goodbye!");
@@ -51,10 +52,7 @@ namespace Courier_Management.Main
             }
         }
 
-        private void crud()
-        {
-           
-        }
+        
 
         public void AdminManagement()
         {
@@ -231,6 +229,79 @@ namespace Courier_Management.Main
                 }
             }
         }
+
+
+        public void CollectionManagement()
+        {
+            Console.WriteLine("\n=== Collections - Courier Management System ===");
+            CollectionService collectionService = new CollectionService();
+
+            while (true)
+            {
+                Console.WriteLine("\nMenu:");
+                Console.WriteLine("1. Mark a courier as collected");
+                Console.WriteLine("2. View collection status by tracking number");
+                Console.WriteLine("3. View all collected couriers");
+                Console.WriteLine("4. Back to main menu");
+
+                Console.Write("Enter your choice: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        Console.Write("Enter Tracking Number: ");
+                        string trackToCollect = Console.ReadLine();
+                        try
+                        {
+                            bool success = collectionService.markAsCollected(trackToCollect);
+                            Console.WriteLine(success ? "Courier marked as collected." : "Failed to update courier.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
+                        }
+                        break;
+
+                    case "2":
+                        Console.Write("Enter Tracking Number: ");
+                        string tracking = Console.ReadLine();
+                        try
+                        {
+                            bool collected = collectionService.getCollectionStatus(tracking);
+                            Console.WriteLine(collected ? "Courier has been collected." : "Courier not yet collected.");
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Error: {ex.Message}");
+                        }
+                        break;
+
+                    case "3":
+                        List<Courier> collectedCouriers = collectionService.getAllCollected();
+                        if (collectedCouriers.Count == 0)
+                        {
+                            Console.WriteLine("No collected couriers found.");
+                        }
+                        else
+                        {
+                            foreach (var c in collectedCouriers)
+                            {
+                                Console.WriteLine($"Tracking: {c.TrackingNumber}, Collected: Yes, Receiver: {c.ReceiverName}");
+                            }
+                        }
+                        break;
+
+                    case "4":
+                        return;
+
+                    default:
+                        Console.WriteLine("Invalid choice. Please enter 1, 2, 3, or 4.");
+                        break;
+                }
+            }
+        }
+
 
         public static bool IsDatabaseConnected()
         {
