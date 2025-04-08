@@ -14,7 +14,7 @@ namespace Courier_Management.Main
         {
             if (IsDatabaseConnected())
             {
-                Console.WriteLine("Connected to the database");
+                Console.WriteLine("\nConnected to the database");
             }
 
             MainModule program = new MainModule();
@@ -22,11 +22,11 @@ namespace Courier_Management.Main
 
             while (true)
             {
-                Console.WriteLine("\n==== Courier Management Application ====");
+                Console.WriteLine("==== Courier Management Application ====");
                 Console.WriteLine("1. Courier Management System");
                 Console.WriteLine("2. Admin Management System");
                 Console.WriteLine("3. Crud");
-                Console.WriteLine("3. Exit");
+                Console.WriteLine("4. Exit");
                 Console.Write("Enter your choice: ");
                 string choice = Console.ReadLine();
 

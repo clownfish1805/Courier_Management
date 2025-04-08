@@ -8,75 +8,91 @@ namespace Courier_Management.CodingQues
 {
     class Task4
     {
-        // Task 9: Parcel Tracking using 2D Array
-        public void TrackParcel(string trackingNumber)
+        public string ques9(string trackingNumber)
         {
-            string[,] parcels = {
-                { "ABC123", "In Transit" },
-                { "DEF456", "Out for Delivery" },
-                { "GHI789", "Delivered" }
+            string[,] parcels = new string[3, 2]
+            {
+                { "TRK123", "In Transit" },
+                { "TRK456", "Out for Delivery" },
+                { "TRK789", "Delivered" }
             };
 
-            bool found = false;
-            for (int i = 0; i < parcels.GetLength(0); i++)
+            for (int i = 0; i < 3; i++)
             {
                 if (parcels[i, 0] == trackingNumber)
                 {
-                    Console.WriteLine($"Tracking Number: {trackingNumber} - Status: {parcels[i, 1]}");
-                    found = true;
-                    break;
+                    return $"Your parcel status is: {parcels[i, 1]}";
                 }
             }
 
-            if (!found)
+            return "Tracking number not found.";
+        }
+
+       
+        public bool ques10(string data, string detail)
+        {
+            if (detail == "name")
             {
-                Console.WriteLine("Tracking number not found.");
+                return Regex.IsMatch(data, @"^[A-Z][a-zA-Z\s]*$");
             }
-        }
-
-        // Task 10: Customer Data Validation
-        public bool ValidateCustomerData(string data, string detail)
-        {
-            switch (detail.ToLower())
+            else if (detail == "address")
             {
-                case "name":
-                    return Regex.IsMatch(data, @"^[A-Z][a-zA-Z\s]*$");
-                case "address":
-                    return !Regex.IsMatch(data, @"[^a-zA-Z0-9\s,]");
-                case "phone":
-                    return Regex.IsMatch(data, @"^\d{3}-\d{3}-\d{4}$");
-                default:
-                    return false;
+                return Regex.IsMatch(data, @"^[a-zA-Z0-9\s,]+$");
             }
+            else if (detail == "phone")
+            {
+                return Regex.IsMatch(data, @"^\d{10}$");
+            }
+            return false;
         }
 
-        // Task 11: Address Formatting
-        public string FormatAddress(string street, string city, string state, string zip)
+       
+        public string ques11(string street, string city, string state, string zip)
         {
-            string Capitalize(string input) =>
-                string.Join(" ", input.Split(' ', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
-                                      .Select(word => char.ToUpper(word[0]) + word.Substring(1).ToLower()));
+            string Capitalize(string input)
+            {
+                string[] words = input.Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < words.Length; i++)
+                {
+                    words[i] = char.ToUpper(words[i][0]) + words[i].Substring(1).ToLower();
+                }
+                return string.Join(" ", words);
+            }
 
-            return $"{Capitalize(street)}, {Capitalize(city)}, {state.ToUpper()} - {zip}";
+            string formattedStreet = Capitalize(street);
+            string formattedCity = Capitalize(city);
+            string formattedState = state.ToUpper();
+
+            return $"{formattedStreet}, {formattedCity}, {formattedState} - {zip}";
         }
 
-        // Task 12: Order Confirmation Email
-        public string GenerateOrderConfirmationEmail(string name, string orderNo, string address, string deliveryDate)
+        
+        public string ques12(string name, string orderNo, string address, string deliveryDate)
         {
-            return $"Dear {name},\n\nThank you for your order!\nOrder Number: {orderNo}\nDelivery Address: {address}\nExpected Delivery Date: {deliveryDate}\n\nRegards,\nCourier Team";
+            return $"Dear {name},\n\n" +
+                   $"Thank you for your order!\n" +
+                   $"Order Number: {orderNo}\n" +
+                   $"Delivery Address: {address}\n" +
+                   $"Expected Delivery Date: {deliveryDate}\n\n" +
+                   "Regards,\nCourier Team";
         }
 
-        // Task 13: Calculate Shipping Costs
-        public double CalculateShippingCost(string source, string destination, double weight)
+        
+        public double ques13(string source, string destination, double weight)
         {
-            // Dummy logic: use length of city names as a distance proxy
-            int distance = Math.Abs(source.Length - destination.Length) * 10 + 50;
-            double cost = (distance * 0.5) + (weight * 2);
+            Console.Write("Enter distance in kilometers: ");
+            double distance = Convert.ToDouble(Console.ReadLine());
+
+            double cost = (distance * 5) + (weight * 10);
+
+            Console.WriteLine($"\nShipping from {source} to {destination} will cost {cost}");
+
             return cost;
+
         }
 
-        // Task 14: Password Generator
-        public string GenerateSecurePassword(int length = 12)
+
+        public string ques14(int length = 12)
         {
             const string upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
             const string lower = "abcdefghijklmnopqrstuvwxyz";
@@ -87,7 +103,6 @@ namespace Courier_Management.CodingQues
             Random rnd = new Random();
             StringBuilder password = new StringBuilder();
 
-            // Ensure at least one of each type
             password.Append(upper[rnd.Next(upper.Length)]);
             password.Append(lower[rnd.Next(lower.Length)]);
             password.Append(digits[rnd.Next(digits.Length)]);
@@ -101,109 +116,139 @@ namespace Courier_Management.CodingQues
             return password.ToString();
         }
 
-        // Task 15: Find Similar Addresses
-        public void FindSimilarAddresses(List<string> addresses, string query)
+     
+        public List<string> ques15(List<string> addresses, string query)
         {
-            Console.WriteLine($"Similar addresses to '{query}':");
+            List<string> result = new List<string>();
+
             foreach (var addr in addresses)
             {
                 if (addr.ToLower().Contains(query.ToLower()))
                 {
-                    Console.WriteLine("- " + addr);
+                    result.Add(addr);
+                }
+            }
+
+            return result;
+        }
+
+        public void RunDemo()
+        {
+            while (true)
+            {
+                
+                
+                Console.WriteLine("9  - Parcel Tracking");
+                Console.WriteLine("10 - Customer Data Validation");
+                Console.WriteLine("11 - Address Formatting");
+                Console.WriteLine("12 - Order Confirmation Email");
+                Console.WriteLine("13 - Calculate Shipping Cost");
+                Console.WriteLine("14 - Password Generator");
+                Console.WriteLine("15 - Find Similar Addresses");
+                Console.WriteLine("0  - Exit");
+                Console.Write("Enter your choice (0–15): ");
+
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "0":
+                        Console.WriteLine("Exiting demo. Thank you!");
+                        return;
+
+                    case "9":
+                        Console.Write("Enter tracking number: ");
+                        string trackNo = Console.ReadLine();
+                        Console.WriteLine(ques9(trackNo));
+                        break;
+
+                    case "10":
+                        Console.Write("Enter detail type (name/address/phone): ");
+                        string detail = Console.ReadLine();
+                        Console.Write("Enter data to validate: ");
+                        string data = Console.ReadLine();
+                        Console.WriteLine(ques10(data, detail) ? "Valid" : "Invalid");
+                        break;
+
+                    case "11":
+                        Console.Write("Enter Street: ");
+                        string street = Console.ReadLine();
+                        Console.Write("Enter City: ");
+                        string city = Console.ReadLine();
+                        Console.Write("Enter State: ");
+                        string state = Console.ReadLine();
+                        Console.Write("Enter Zip: ");
+                        string zip = Console.ReadLine();
+                        Console.WriteLine("Formatted Address: " + ques11(street, city, state, zip));
+                        break;
+
+                    case "12":
+                        Console.Write("Enter Name: ");
+                        string name = Console.ReadLine();
+                        Console.Write("Enter Order Number: ");
+                        string orderNo = Console.ReadLine();
+                        Console.Write("Enter Address: ");
+                        string address = Console.ReadLine();
+                        Console.Write("Enter Expected Delivery Date: ");
+                        string deliveryDate = Console.ReadLine();
+                        Console.WriteLine(ques12(name, orderNo, address, deliveryDate));
+                        break;
+
+                    case "13":
+                        Console.Write("Enter Source Location: ");
+                        string source = Console.ReadLine();
+                        Console.Write("Enter Destination Location: ");
+                        string destination = Console.ReadLine();
+                        Console.Write("Enter Parcel Weight (kg): ");
+                        if (double.TryParse(Console.ReadLine(), out double weight))
+                        {
+                            Console.WriteLine("Shipping Cost: ₹" + ques13(source, destination, weight));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid weight input.");
+                        }
+                        break;
+
+                    case "14":
+                        Console.Write("Enter Password Length: ");
+                        if (int.TryParse(Console.ReadLine(), out int length))
+                        {
+                            Console.WriteLine("Generated Password: " + ques14(length));
+                        }
+                        else
+                        {
+                            Console.WriteLine("Invalid length input.");
+                        }
+                        break;
+
+                    case "15":
+                        List<string> addresses = new List<string>
+                {
+                    "123 Main Street",
+                    "45 Rose Avenue",
+                    "123 Main St",
+                    "678 Main Road",
+                    "Rose Garden Block B"
+                };
+
+                        Console.Write("Enter address keyword to search: ");
+                        string keyword = Console.ReadLine();
+                        List<string> similar = ques15(addresses, keyword);
+                        Console.WriteLine($"Similar addresses to '{keyword}':");
+                        foreach (string addr in similar)
+                        {
+                            Console.WriteLine("- " + addr);
+                        }
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid option. Please choose between 0–15.");
+                        break;
                 }
             }
         }
 
-        // Optional: You can create a test method to show how each one works
-        public void RunDemo()
-        {
-            Console.WriteLine("Courier Management - Task 4 Demo");
-            Console.WriteLine("Select a question to demo:");
-            Console.WriteLine("9  - Parcel Tracking");
-            Console.WriteLine("10 - Customer Data Validation");
-            Console.WriteLine("11 - Address Formatting");
-            Console.WriteLine("12 - Order Confirmation Email");
-            Console.WriteLine("13 - Calculate Shipping Cost");
-            Console.WriteLine("14 - Password Generator");
-            Console.WriteLine("15 - Find Similar Addresses");
-            Console.Write("Enter your choice (9–15): ");
-            string choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "9":
-                    Console.Write("Enter tracking number: ");
-                    string trackNo = Console.ReadLine();
-                    TrackParcel(trackNo);
-                    break;
-
-                case "10":
-                    Console.Write("Enter detail type (name/address/phone): ");
-                    string detail = Console.ReadLine();
-                    Console.Write("Enter data to validate: ");
-                    string data = Console.ReadLine();
-                    Console.WriteLine("Is Valid: " + ValidateCustomerData(data, detail));
-                    break;
-
-                case "11":
-                    Console.Write("Enter Street: ");
-                    string street = Console.ReadLine();
-                    Console.Write("Enter City: ");
-                    string city = Console.ReadLine();
-                    Console.Write("Enter State: ");
-                    string state = Console.ReadLine();
-                    Console.Write("Enter Zip: ");
-                    string zip = Console.ReadLine();
-                    Console.WriteLine("Formatted Address: " + FormatAddress(street, city, state, zip));
-                    break;
-
-                case "12":
-                    Console.Write("Enter Name: ");
-                    string name = Console.ReadLine();
-                    Console.Write("Enter Order Number: ");
-                    string orderNo = Console.ReadLine();
-                    Console.Write("Enter Address: ");
-                    string address = Console.ReadLine();
-                    Console.Write("Enter Expected Delivery Date: ");
-                    string deliveryDate = Console.ReadLine();
-                    Console.WriteLine("\n--- Order Confirmation Email ---");
-                    Console.WriteLine(GenerateOrderConfirmationEmail(name, orderNo, address, deliveryDate));
-                    break;
-
-                case "13":
-                    Console.Write("Enter Source Location: ");
-                    string source = Console.ReadLine();
-                    Console.Write("Enter Destination Location: ");
-                    string destination = Console.ReadLine();
-                    Console.Write("Enter Parcel Weight (kg): ");
-                    double weight = Convert.ToDouble(Console.ReadLine());
-                    Console.WriteLine("Shipping Cost: $" + CalculateShippingCost(source, destination, weight));
-                    break;
-
-                case "14":
-                    Console.Write("Enter Password Length: ");
-                    int length = Convert.ToInt32(Console.ReadLine());
-                    Console.WriteLine("Generated Password: " + GenerateSecurePassword(length));
-                    break;
-
-                case "15":
-                    List<string> addresses = new List<string> {
-                "123 Main Street",
-                "456 Elm Avenue",
-                "789 Main Road",
-                "321 Oak Drive",
-                "Mainland Street"
-            };
-                    Console.Write("Enter address keyword to search: ");
-                    string keyword = Console.ReadLine();
-                    FindSimilarAddresses(addresses, keyword);
-                    break;
-
-                default:
-                    Console.WriteLine("Invalid option. Please choose between 9–15.");
-                    break;
-            }
-        }
-
     }
+
 }
